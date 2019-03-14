@@ -1,4 +1,3 @@
-// declare variables
 
 // computer options
 var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -6,17 +5,25 @@ var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 // variables for wins, losses, draws and guesses
 var wins = 0;
 var losses = 0;
-var guessesLeft = 5;
+var lettersGuessed = [];
+var guessesLeft = 10;
 var computerChoice;
 
+//  Function to choose new letter
 function newLetter() {
     computerChoice = options[Math.floor(Math.random() * options.length)];
-    console.log("computer choice: " + computerChoice);
 }
 
+// Function to push lettersGuessed into userGuess. This is used to post user guesses.
+function guesses() {
+    lettersGuessed.push(userGuess);
+}
+
+// Function to reset vars
 function reset() {
     newLetter();
-    guessesLeft = 5;
+    lettersGuessed = [];
+    guessesLeft = 10;
 }
 
 // computer to pick random letter from array
@@ -27,6 +34,7 @@ document.onkeyup = function () {
 
     // Captures key press, converts to lowercase & stores it in a variable.
     var userGuess = event.key.toLowerCase();
+    lettersGuessed.push(userGuess);
 
     // start comparisons
 
@@ -47,20 +55,9 @@ document.onkeyup = function () {
     }
 
     // Update DOM to reflect changes.
-    var html = "<p>Guess what letter I'm thinking of...</p>" + "<p>Wins: </p>" + wins + "<p>Losses: </p>" + losses + "<p>Guesses Left: " + guessesLeft + "</p>";
+    document.getElementById("wins").textContent = wins;
+    document.getElementById("losses").textContent = losses;
+    document.getElementById("lettersGuessed").textContent = lettersGuessed;
+    document.getElementById("guessesLeft").textContent = guessesLeft;
 
-    document.querySelector("#game").innerHTML = html;
 }
-
-
-/* 
-1. computer gets a letter from list
-2. user picks a letter
-3. compare to computer's choice
-4. If same, you win the game
-    a. Game starts over.
-5. if not, then you lose a turn and lose the game
-    a. Losses/wins stay. Game starts over.
-
-
-*/
